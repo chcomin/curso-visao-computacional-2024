@@ -31,7 +31,9 @@ https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/schedule.html
 
 ### GPUs online grátis
 
- https://colab.research.google.com/
+Lista de serviços em nuvem que possibilitam executar códigos em GPU de graça:
+
+https://colab.research.google.com/
 * GPU: Tesla T4
 * CPU: Intel Xeon 2.30GHz, 1 core 2 threads
 * RAM: 12 GB
@@ -64,3 +66,7 @@ https://www.kaggle.com/code/
 * RAM: 32 GB
 * Disco: 73 GB (persistente)
 * 12 horas de execução contínua
+
+<br/>
+
+![](data/olho.png)
