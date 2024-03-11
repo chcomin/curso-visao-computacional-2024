@@ -1,19 +1,20 @@
 # Visão Computacional 2024
 
-Curso de Visão Computacional ministrado no Departamento de Computação UFSCar. Ainda em construção!!
+Curso de Visão Computacional ministrado no Departamento de Computação UFSCar. **Ainda em construção**!!
+
+O curso é dividio em módulos (M01, M02, ...). Cada módulo possui notebooks Jupyter numerados apresentando conceitos sobre Visão Computacional.
 
 ### Bibliografia
 
-* Understanding Deep Learning.
+* Understanding Deep Learning, Simon J. D. Prince
 https://udlbook.github.io/udlbook.
 
-* Dive into Deep Learning. https://d2l.ai.
+* Dive into Deep Learning, Aston Zhang A. et al. https://d2l.ai.
 
-* Deep Learning: Foundations and concepts (Bishop). https://www.bishopbook.com.
+* Deep Learning: Foundations and concepts, Chris Bishop e Hugh Bishop. https://www.bishopbook.com.
 
-* Probabilistic Machine Learning: An Introduction (Murphy). https://probml.github.io/pml-book/book1.html.
+* Computer Vision: Algorithms and Applications, Richard Szeliski. https://szeliski.org/Book.
 
-* Deep Learning (Goodfellow). https://www.deeplearningbook.org.
 
 ### Outras referências interessantes
 
@@ -26,7 +27,7 @@ https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/schedule.html
 
 ### Configuração do ambiente
 
-`conda install -c pytorch -c nvidia -c conda-forge python pytorch torchvision torchaudio pytorch-cuda=12.1 matplotlib notebook numpy scikit-learn scipy ipympl timm transformers diffusers accelerate python-graphviz`
+`conda install -c pytorch -c nvidia -c conda-forge python pytorch torchvision torchaudio pytorch-cuda=12.1 matplotlib notebook numpy scikit-learn scipy ipympl transformers diffusers accelerate python-graphviz`
 
 ### GPUs online grátis
 
