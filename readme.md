@@ -69,4 +69,6 @@ https://www.kaggle.com/code/
 
 <br/>
 
-![](data/olho.png)
+A imagem abaixo foi gerada utilizando um dos notebooks da disciplina!
+
+![](data/leao.png)
