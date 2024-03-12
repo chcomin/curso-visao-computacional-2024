@@ -56,7 +56,7 @@ https://lightning.ai/
 * CPU: Intel Xeon Platinum 8259CL CPU 2.50GHz, 4 cores 2 threads
 * RAM: 16 GB
 * Disco: 416 GB! (persistente)
-* 22 horas de execução por semana
+* 22 horas de execução por mês
 
 <br/>
 
