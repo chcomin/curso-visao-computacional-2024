@@ -9,7 +9,7 @@ import torchvision.transforms.v2 as transf
 # Gambiarra para importar as funções de dataset feitas anteriormente
 import sys
 sys.path.insert(0, '../')
-from M08_classificacao_de_imagens_naturais.dataset import OxfordIIITPet, Subset, unormalize
+from M06_classificacao_de_imagens_naturais.dataset import OxfordIIITPet, Subset, unormalize
 
 class OxfordIIITPetCap(OxfordIIITPet):
     """Modifiação da classe OxfordIIITPet para retornar imagens e captions."""

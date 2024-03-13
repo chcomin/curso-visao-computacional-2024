@@ -6,7 +6,6 @@ from torch import nn
 from torch.utils.data import DataLoader
 from IPython import display
 from dataset import get_dataset
-import time
 
 def seed_all(seed):
     "Semente para o pytorch, numpy e python."
@@ -38,18 +37,12 @@ def show_log(logger):
 def train_step(model, dl_train, optim, loss_func, scheduler, device):
     '''Executa uma época de treinamento.'''
 
-    gpu_start = torch.cuda.Event(enable_timing=True)
-    gpu_end = torch.cuda.Event(enable_timing=True) 
-
     # Coloca o modelo em modo treinamento. Neste notebook não fará diferença,
     # mas algumas camadas (batchnorm, dropout) precisam disso
     model.train()
     # Armazenará a média das losses de todos os bathces
     loss_log = 0.
-    gpu_start.record() 
-    for idx, (imgs, targets) in enumerate(dl_train):
-        if idx==0:
-            ti = time.perf_counter()
+    for imgs, targets in enumerate(dl_train):
         imgs = imgs.to(device)
         targets = targets.to(device)
         model.zero_grad()
@@ -60,11 +53,6 @@ def train_step(model, dl_train, optim, loss_func, scheduler, device):
         
         # Multiplica por imgs.shape[0] porque o último batch pode ter tamanho diferente
         loss_log += loss.detach()*imgs.shape[0]
-
-    gpu_end.record()
-    tt = time.perf_counter() - ti
-    torch.cuda.synchronize()
-    #print(tt, gpu_start.elapsed_time(gpu_end)/1000)
 
     # Muda o learning rate
     scheduler.step()

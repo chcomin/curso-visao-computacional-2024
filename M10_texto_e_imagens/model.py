@@ -1,6 +1,5 @@
 import torch
 from torch import nn
-#from torchvision.models import resnet18, ResNet18_Weights
 from torchvision.models import resnet50, ResNet50_Weights
 from transformers import pipeline
 

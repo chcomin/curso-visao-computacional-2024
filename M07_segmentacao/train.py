@@ -7,8 +7,7 @@ Ele faz com que os pixeis com valor 2 na imagem de rótulos sejam ignorados.
 2. inclusão da função collate_fn no dataloader de validação, pois
 as imagens não possuem o mesmo tamanho. 
 
-3. Modificação da função
-de acurácia para medir a intersecção sobre a união.'''
+3. Modificação da função de acurácia para medir a intersecção sobre a união.'''
 
 import torch
 from torch import nn
@@ -18,7 +17,7 @@ from dataset import get_dataset, collate_fn
 # Gambiarra para importar o script train.py feito anteriormente
 import sys
 sys.path.insert(0, '../')
-import M08_classificacao_de_imagens_naturais.train as train_class 
+import M06_classificacao_de_imagens_naturais.train as train_class 
 
 @torch.no_grad()
 def iou(scores, targets):
@@ -37,12 +36,6 @@ def iou(scores, targets):
     iou = tp/(tp+fp+fn)
 
     return iou
-
-# Outra gambiarra para substituir a função accuracy utilizada dentro da função
-# train_class.valid_step. O ideal seria fazer um script de treinamento mais geral,
-# que recebe uma função que calcula a acurácia. Mas por questões didáticas tentei
-# simplificar ao máximo o script de treinamento.
-#train_class.accuracy = iou
 
 def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
           num_workers=5):

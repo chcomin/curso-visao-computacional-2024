@@ -6,10 +6,10 @@ from torchvision import tv_tensors
 # Gambiarra para importar o script dataset.py feito anteriormente
 import sys
 sys.path.insert(0, '../')
-from M08_classificacao_de_imagens_naturais.dataset import OxfordIIITPet
+from M06_classificacao_de_imagens_naturais.dataset import OxfordIIITPet
 # A classe Subset de classificação não aplica transformação no target, então
 # vamos usar a classe Subset de segmentação
-from M09_segmentacao.dataset import Subset
+from M07_segmentacao.dataset import Subset
 
 class OxfordIIITPetAe(OxfordIIITPet):
 

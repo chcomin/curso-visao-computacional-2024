@@ -9,7 +9,6 @@ pois isso é feito dentro do modelo TextEncoder
 em classificar as imagens
 """
 import random
-import time
 import matplotlib.pyplot as plt
 import numpy as np
 import torch

@@ -23,7 +23,7 @@ from dataset import get_dataset
 # Gambiarra para importar o script train.py feito anteriormente
 import sys
 sys.path.insert(0, '../')
-import M08_classificacao_de_imagens_naturais.train as train_class 
+import M06_classificacao_de_imagens_naturais.train as train_class 
 
 # A acurácia é a própria loss L1 de validação que já está sendo calculada
 # na função de treinamento. Definimos uma função que retorna 0 que será ignorado.
