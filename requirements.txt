@@ -1,0 +1,15 @@
+python==3.12.2
+torch==2.2.1
+torchvision==0.17.1
+torchaudio==2.2.1
+matplotlib==3.8.3
+notebook==7.1.0
+numpy==1.26.4
+scipy==1.12.0
+transformers==4.38.1
+diffusers==0.26.3
+accelerate==0.27.0
+ipympl==0.9.3
+timm==0.9.16
+plotly==5.19.0
+scikit-learn==1.4.1
