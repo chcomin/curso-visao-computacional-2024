@@ -37,6 +37,7 @@ def transform_mnist(img, mean=33., std=76.5):
     return img
 
 def augment_mnist(img, mean=33., std=76.5):
+    '''Aplica data augmentation em imagens do MNIST.'''
 
     color = transforms_pt.ColorJitter(brightness=0.9)
     crop = transforms_pt.RandomResizedCrop(size=28, scale=(0.9, 1.1), ratio= (0.8, 1.2))
@@ -57,6 +58,8 @@ def load_mnist(root='../data', n=1000):
     return ds_train, ds_valid
 
 def load_mnist_small(root='../data', n_train=50, n_valid=1000):
+    '''Seleciona `n_train`/10 imagens de cada classe do MNIST e cria um
+    dataset.'''
 
     ds = datasets.MNIST(root, train=True, download=True)
     train_indices, valid_indices = small_split(ds, n_train=n_train, n_valid=n_valid)
@@ -67,6 +70,7 @@ def load_mnist_small(root='../data', n_train=50, n_valid=1000):
     return ds_train, ds_valid
 
 def load_fashion_mnist(root='../data', n=1000):
+    '''Carrega o dataset Fashion MNIST.'''
 
     ds = datasets.FashionMNIST(root, train=True, download=True)
     random.seed(42)
@@ -79,6 +83,8 @@ def load_fashion_mnist(root='../data', n=1000):
     return ds_train, ds_valid
 
 def load_fashion_mnist_small(root='../data', n_train=50, n_valid=1000):
+    '''Seleciona `n_train`/10 imagens de cada classe do Fashion MNIST e cria um
+    dataset.'''
 
     ds = datasets.FashionMNIST(root, train=True, download=True)
     train_indices, valid_indices = small_split(ds, n_train=n_train, n_valid=n_valid)
@@ -90,8 +96,11 @@ def load_fashion_mnist_small(root='../data', n_train=50, n_valid=1000):
     return ds_train, ds_valid
 
 def small_split(ds, n_train=50, n_valid=1000):
+    '''Percorre um dataset e seleciona as primeiras `n_train`/10 imagens
+    encontradas de cada classe. As imagens não selecionadas são incluídas
+    em um dataset de validação. Assume que o datast possui 10 classes.'''
 
-    nc = n_train//10  # Images per class
+    nc = n_train//10  # Imagens por classe
     train_indices = []
     counts = {c:0 for c in range(10)}
     idx = 0

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from IPython import display
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -53,8 +54,25 @@ def valid_step(model, dl_valid, loss_func, perf_func):
 
     return loss_log.item(), perf_log.item()
 
+def plot_log(logger):
+
+    epochs, losses_train, losses_valid, accs = zip(*logger)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7,3))
+    ax1.plot(epochs, losses_train, label='Train loss')
+    ax1.plot(epochs, losses_valid, label='Valid loss')
+    ax1.set_xlabel('Epoch')
+    ax1.legend()
+    ax2.plot(epochs, accs)
+    ax2.set_xlabel('Epoch')
+    ax2.set_ylabel('Accuracy')
+    fig.tight_layout()
+
+    display.clear_output(wait=True) 
+    plt.show()
+
 def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy, 
-          weight_decay=0., verbose=True):
+          weight_decay=0.):
 
     dl_train = DataLoader(ds_train, batch_size=bs, shuffle=True)
     dl_valid = DataLoader(ds_valid, batch_size=bs, shuffle=False)
@@ -66,20 +84,7 @@ def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy,
         loss_train = train_step(model, dl_train, optim, loss_func)
         loss_valid, perf = valid_step(model, dl_valid, loss_func, perf_func)
         logger.append((epoch, loss_train, loss_valid, perf))
-        if verbose:
-            print(f'{epoch} {loss_train:.2f} {loss_valid:.2f} {perf:.2f}')
-    
+        plot_log(logger)
+
     return logger
 
-def plot_log(logger):
-
-    epochs, losses_train, losses_valid, accs = zip(*logger)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7,2))
-    ax1.plot(epochs, losses_train, label='Train loss')
-    ax1.plot(epochs, losses_valid, label='Valid loss')
-    ax1.set_xlabel('Epoch')
-    ax1.legend()
-    ax2.plot(epochs, accs)
-    ax2.set_xlabel('Epoch')
-    ax2.set_ylabel('Accuracy')

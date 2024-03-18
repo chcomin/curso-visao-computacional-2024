@@ -4,5 +4,5 @@ data/FashionMNIST/
 data/oxford_pets/
 data/checkpoints/*/
 other/
-M13_deteccao_de_pontos_salientes/
-M14_casamento_de_pontos_salientes/
+*deteccao_de_pontos_salientes/
+*casamento_de_pontos_salientes/
