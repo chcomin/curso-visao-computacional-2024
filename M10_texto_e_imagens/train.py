@@ -45,13 +45,15 @@ def show_log(logger):
     plt.show()
 
 def train_step(model, dl_train, optim, loss_func, scheduler, device):
-    '''Executa uma época de treinamento.'''
+    '''Executa uma época de treinamento. Não podemos utilizar a função do
+    script de treinamento de classificação apenas porque target.to() daria
+    erro pois target não é um tensor.'''
 
     model.train()
     loss_log = 0.
-    for idx, (imgs, texts) in enumerate(dl_train):
+    for imgs, texts in dl_train:
         imgs = imgs.to(device)
-        model.zero_grad()
+        optim.zero_grad()
         similarity = model(imgs, texts)
         loss = loss_func(similarity)
         loss.backward()
@@ -125,7 +127,7 @@ def valid_step(model, dl_valid, loss_func, perf_func, device):
     return loss_log.item(), perf_log.item()
 
 def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
-          freeze_text=True, num_workers=5):
+          num_workers=5):
     
     # Fixa todas as seeds
     seed_all(seed)
@@ -134,8 +136,6 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
 
     ds_train, ds_valid = get_dataset('../data/oxford_pets', '../data/oxford_pets_captions.txt',
                                     resize_size=resize_size)
-    # Truque para testar o código:
-    #ds_train.indices = ds_train.indices[:5*256]
     model.to(device)
 
     # persistent_workers evita que cada processo reimporte as bibliotecas

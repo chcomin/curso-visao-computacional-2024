@@ -189,6 +189,4 @@ def get_dataset(root, split=0.2, resize_size=384):
     ds_train = Subset(ds, indices[n_valid:], TransformsTrain(resize_size))
     ds_valid = Subset(ds, indices[:n_valid], TransformsEval(resize_size))
 
-    #ds_train.indices = ds_train.indices[:1]
-
     return ds_train, ds_valid, class_weights

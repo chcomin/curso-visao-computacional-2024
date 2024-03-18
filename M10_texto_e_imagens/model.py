@@ -103,6 +103,8 @@ def clip_loss(similarity):
     return (caption_loss + image_loss) / 2.0
 
 def get_model(freeze_text=True):
+    '''Retorna o modelo CLIP. `freeze_text` congela os parâmetros do codificador
+    de texto, que é um modelo bem grande.'''
 
     image_encoder = resnet50(weights=ResNet50_Weights.DEFAULT)
     img_dim = image_encoder.fc.in_features

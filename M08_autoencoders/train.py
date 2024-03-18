@@ -72,7 +72,7 @@ def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_siz
     ds_train, ds_valid = get_dataset(
         '../data/oxford_pets', resize_size=resize_size
         )
-    #ds_train.indices = ds_train.indices[:5*256]
+
     model.to(device)
 
     dl_train = DataLoader(ds_train, batch_size=bs_train, shuffle=True, 
@@ -80,7 +80,7 @@ def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_siz
     dl_valid = DataLoader(ds_valid, batch_size=bs_valid, shuffle=False,
                           num_workers=num_workers, persistent_workers=num_workers>0)
 
-    # Loss L1 ao invés da entrpia cruzada.
+    # Loss L1 ao invés da entropia cruzada.
     loss_func = nn.L1Loss()
     optim = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay,
                             momentum=0.9) 

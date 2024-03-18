@@ -6,8 +6,17 @@ from torch.utils.data import Dataset
 import torchvision.transforms.v2 as transf
 
 class Subset(Dataset):
+    """Cria um novo dataset a partir de algumas imagens de um dataset
+    de entrada."""
 
     def __init__(self, ds, indices, transform=None):
+        """
+        Args:
+            ds: dataset original
+            indices: lista de índices a serem utilizados no dataset original
+            transform: função de transformação dos dados
+        """
+
         self.ds = ds
         self.indices = indices
         self.transform = transform
@@ -24,6 +33,7 @@ class Subset(Dataset):
         return len(self.indices)
 
 class OxfordIIITPet(Dataset):
+    """Dataset com imagens da base Oxford Pets."""
 
     def __init__(self, root, transforms=None):
 
@@ -60,6 +70,7 @@ class OxfordIIITPet(Dataset):
         return len(self.images)
 
 class TransformsTrain:
+    """Transformações de treinamento"""
 
     def __init__(self, resize_size=224):
 
@@ -78,6 +89,7 @@ class TransformsTrain:
         return self.transforms(img)
 
 class TransformsEval:
+    """Transformações de validação"""
 
     def __init__(self):
 
@@ -95,6 +107,8 @@ class TransformsEval:
         return self.transforms(img)
 
 def unormalize(img):
+    """Reverte as transformações para visualização da imagem."""
+
     img = img.permute(1, 2, 0)
     mean = torch.tensor([122.7, 114.6, 100.9])
     std = torch.tensor([59.2, 58.4, 59.0])
@@ -104,13 +118,22 @@ def unormalize(img):
     return img
 
 def get_dataset(root, split=0.2, resize_size=224):
+    """Retorna o dataset Oxford Pets.
 
+    Args:
+        root: diretório raíz do dataset
+        split: fração de dados a utilizar no conjunto de validação
+        resize_size: tamanho que as imagens serão redimensionadas
+    """
+
+    # Ponderação das classes calculada em um dos notebooks
     class_weights = (0.677, 0.323)
 
     ds = OxfordIIITPet(root)
     n = len(ds)
     n_valid = int(n*split)
 
+    # Cria uma lista aleatória de índices
     indices = list(range(n))
     random.seed(42)
     random.shuffle(indices)

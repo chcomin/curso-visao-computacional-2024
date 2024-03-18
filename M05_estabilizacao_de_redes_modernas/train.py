@@ -13,7 +13,7 @@ def train_step(model, dl_train, optim, loss_func):
     # Armazenará a média das losses de todos os bathces
     loss_log = 0.
     for imgs, targets in dl_train:
-        model.zero_grad()
+        optim.zero_grad()
         scores = model(imgs)
         loss = loss_func(scores, targets)
         loss.backward()

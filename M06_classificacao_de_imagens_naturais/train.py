@@ -42,7 +42,7 @@ def train_step(model, dl_train, optim, loss_func, scheduler, device):
     model.train()
     # Armazenará a média das losses de todos os bathces
     loss_log = 0.
-    for imgs, targets in enumerate(dl_train):
+    for imgs, targets in dl_train:
         imgs = imgs.to(device)
         targets = targets.to(device)
         model.zero_grad()
@@ -99,9 +99,9 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
     seed_all(seed)
     # Usa cuda se disponível
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
+    # Carrega o dataset
     ds_train, ds_valid, class_weights = get_dataset('../data/oxford_pets', resize_size=resize_size)
-    # Truque para testar o código:
+    # Truque para testar o código, fingimos que o dataset possui menos imagens
     #ds_train.indices = ds_train.indices[:5*256]
     model.to(device)
 
@@ -145,19 +145,3 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
     model.to('cpu')
 
     return ds_train, ds_valid, logger
-
-if __name__=='__main__':
-
-    from torchvision import models
-
-    params = {
-        'bs':128,
-        'num_epochs':1,
-        'lr':0.01,
-        'weight_decay':1e-4,
-        'seed':0
-    }
-
-    model = models.resnet18()
-    model.fc = nn.Linear(model.fc.in_features, 2)
-    ds_train, ds_valid, logger = train(model, **params)
