@@ -14,9 +14,10 @@ O curso é dividio em módulos (M01, M02, ...). Cada módulo possui notebooks Ju
 6. Classificação de imagens naturais;
 7. Segmentação de imagens naturais;
 8. Autoencoders para remoção de ruído;
-9. Busca de imagens por linguagem natural;
-10. Geração de imagens artificiais
-11. Detecção e casamento de pontos salientes
+9. Mecanismos de atenção (transformers);
+10. Busca de imagens por linguagem natural;
+11. Geração de imagens artificiais
+12. Detecção e casamento de pontos salientes
 
 ## Bibliografia
 
@@ -42,7 +43,7 @@ https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/schedule.html
 
 `conda install -c pytorch -c nvidia -c conda-forge python pytorch torchvision torchaudio pytorch-cuda=12.1 matplotlib notebook numpy scipy transformers diffusers accelerate python-graphviz ipympl scikit-learn timm plotly`
 
-As bibliotecas python-graphviz, ipympl, scikit-learn, timm e plotly são opcionais e serão usadas apenas uma única vez em exemplos específicos. Você pode usar os arquivos requirements.txt ou requirements.yml para criar o ambiente.
+As bibliotecas python-graphviz, ipympl, scikit-learn, timm e plotly são opcionais e serão usadas apenas uma única vez em exemplos específicos. Você pode usar os arquivos requirements.txt ou requirements.yml para criar o ambiente. Note que o pacote `-c nvidia pytorch-cuda=12.1` só deve ser instalado se o ambiente tiver acesso a uma GPU.
 
 
 ## GPUs online grátis
@@ -60,7 +61,7 @@ https://colab.research.google.com/
 
 https://studiolab.sagemaker.aws/
 * GPU: Tesla T4 (16GB)
-* CPU: Intel Xeon Platinum 8259CL CPU 2.50GHz, 2 cores 2 threads
+* CPU: Intel Xeon Platinum 8259CL CPU 2.50GHz, 2 cores 4 threads
 * CPU RAM: 16 GB
 * Disco: 15 GB (persistente)
 * 4 horas por dias de execução
@@ -69,7 +70,7 @@ https://studiolab.sagemaker.aws/
 
 https://lightning.ai/
 * GPU: Tesla T4 (16GB)
-* CPU: Intel Xeon Platinum 8259CL CPU 2.50GHz, 4 cores 2 threads
+* CPU: Intel Xeon Platinum 8259CL CPU 2.50GHz, 4 cores 8 threads
 * RAM: 16 GB
 * Disco: 416 GB! (persistente)
 * 22 horas de execução por mês
@@ -77,8 +78,8 @@ https://lightning.ai/
 <br/>
 
 https://www.kaggle.com/code/
-* GPU: 2x Tesla T4 ou Tesla P100   (pode escolher, ambas possuem 16GB)
-* CPU: Intel Xeon CPU 2.00GHz, 2 cores, 2 threads
+* GPU: 2x Tesla T4 ou 1x Tesla P100 (pode escolher, ambas possuem 16GB)
+* CPU: Intel Xeon CPU 2.00GHz, 2 cores 4 threads
 * RAM: 32 GB
 * Disco: 73 GB (persistente)
 * 12 horas de execução contínua
