@@ -1,5 +1,5 @@
 _*
-*.ipynb_checkpoints/
+.ipynb_checkpoints/
 data/MNIST/
 data/FashionMNIST/
 data/oxford_pets/
