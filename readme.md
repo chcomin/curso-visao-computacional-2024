@@ -48,7 +48,7 @@ As bibliotecas python-graphviz, ipympl, scikit-learn, timm e plotly são opciona
 
 ## GPUs online grátis
 
-A grande maioria dos códigos da disciplina foi planejada para não necessitar de GPUs. Mas se for necessário executar algo em GPU, segue abaixo uma lista de serviços em nuvem que possibilitam execução na GPU de graça. As informações foram coletadas em 05/03/2024.
+A grande maioria dos códigos da disciplina foi planejada para não necessitar de GPUs. Os notebooks que precisam de GPU estão marcados com (GPU) no nome. Os códigos foram testados em um processador Intel Core i5-3230M 2.60GHz com 2 cores e 4 threads e 8 GB de RAM, ou seja, um computador básico. Para os códigos que precisam de GPU, segue abaixo uma lista de serviços em nuvem que possibilitam execução na GPU de graça. As informações foram coletadas em 05/03/2024.
 
 https://colab.research.google.com/
 * GPU: Tesla T4 (16GB)

@@ -1,4 +1,6 @@
 _*
+*.zip
+.vscode
 .ipynb_checkpoints/
 data/MNIST/
 data/FashionMNIST/
