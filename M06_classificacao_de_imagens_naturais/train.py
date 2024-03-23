@@ -45,7 +45,7 @@ def train_step(model, dl_train, optim, loss_func, scheduler, device):
     for imgs, targets in dl_train:
         imgs = imgs.to(device)
         targets = targets.to(device)
-        model.zero_grad()
+        optim.zero_grad()
         scores = model(imgs)
         loss = loss_func(scores, targets)
         loss.backward()
