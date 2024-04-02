@@ -32,12 +32,21 @@ https://udlbook.github.io/udlbook. Principal referência do curso. Possui excele
 
 ### Outras referências interessantes
 
-* Curso do Justin Johnson da Universidade de Michigan: 
-https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/schedule.html
+* Curso do Justin Johnson da Universidade de Michigan: https://web.eecs.umich.edu/~justincj/teaching/eecs498/WI2022/schedule.html
 
 * Curso de Stanford: http://cs231n.stanford.edu/schedule.html
 
-* Dicas importantes sobre treinamento de redes neurais - Andrej Karpathy:  https://karpathy.github.io/2019/04/25/recipe/
+* Dicas importantes sobre treinamento de redes neurais - Andrej Karpathy: https://karpathy.github.io/2019/04/25/recipe/
+
+## Materiais sobre Python e processamento de imagens
+
+Revisão sobre conceitos Python e numpy necessários para redes neurais: https://cs231n.github.io/python-numpy-tutorial/
+
+Livro referência para processamento digital de imagens: [Processamento Digital de Imagens, R. Gonzalez e R. Woods](https://www.amazon.com.br/Processamento-digital-imagens-Rafael-Gonzalez/dp/8576054019)
+
+Playlist de disicplina PDI ministrada durante a pandemia em 2021: https://youtube.com/playlist?list=PLV6nBLHbx0riEUDgJrAogzpAt3qQquKVR
+
+Slides e códigos de disciplina PDI ministrada em 2022: [https://www.dropbox.com/scl/fo/3hahb07p2ncfzhus0tpq9](https://www.dropbox.com/scl/fo/3hahb07p2ncfzhus0tpq9/AM_1eZxgn74NWp8OAFjiA6A?rlkey=xvyhhzjht6dzskmo6q5m22j8p&dl=0)
 
 ## Configuração do ambiente
 
