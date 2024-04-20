@@ -18,7 +18,7 @@ def train_step(model, dl_train, optim, loss_func):
         loss = loss_func(scores, targets)
         loss.backward()
         optim.step()
-        
+
         # Multiplica por imgs.shape[0] porque o último batch pode ter tamanho diferente
         loss_log += loss.detach()*imgs.shape[0]
 
@@ -33,8 +33,9 @@ def accuracy(scores, targets):
 # Anotador para evitar que gradientes sejam registrados dentro da função
 @torch.no_grad()
 def valid_step(model, dl_valid, loss_func, perf_func):
+    '''Valida o modelo no conjunto de validação.'''
 
-    # Coloca o modelo em modo de validação. 
+    # Coloca o modelo em modo de validação.
     model.eval()
     # Variáveis que armazenarão a loss e a acurácia
     loss_log = 0.
@@ -54,7 +55,8 @@ def valid_step(model, dl_valid, loss_func, perf_func):
 
     return loss_log.item(), perf_log.item()
 
-def plot_log(logger):
+def show_log(logger):
+    '''Mostra as métricas de treinamento e validação.'''
 
     epochs, losses_train, losses_valid, accs = zip(*logger)
 
@@ -68,7 +70,7 @@ def plot_log(logger):
     ax2.set_ylabel('Accuracy')
     fig.tight_layout()
 
-    display.clear_output(wait=True) 
+    display.clear_output(wait=True)
     plt.show()
 
 def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy):
@@ -83,6 +85,6 @@ def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy):
         loss_train = train_step(model, dl_train, optim, loss_func)
         loss_valid, perf = valid_step(model, dl_valid, loss_func, perf_func)
         logger.append((epoch, loss_train, loss_valid, perf))
-        plot_log(logger)
+        show_log(logger)
 
     return logger

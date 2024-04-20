@@ -10,7 +10,7 @@ from dataset import get_dataset
 def seed_all(seed):
     "Semente para o pytorch, numpy e python."
     torch.manual_seed(seed)
-    random.seed(seed) 
+    random.seed(seed)
     np.random.seed(seed)
 
 def show_log(logger):
@@ -31,7 +31,7 @@ def show_log(logger):
     ax2.set_ylim((0,1.))
     fig.tight_layout()
 
-    display.clear_output(wait=True) 
+    display.clear_output(wait=True)
     plt.show()
 
 def train_step(model, dl_train, optim, loss_func, scheduler, device):
@@ -50,7 +50,7 @@ def train_step(model, dl_train, optim, loss_func, scheduler, device):
         loss = loss_func(scores, targets)
         loss.backward()
         optim.step()
-        
+
         # Multiplica por imgs.shape[0] porque o último batch pode ter tamanho diferente
         loss_log += loss.detach()*imgs.shape[0]
 
@@ -70,7 +70,7 @@ def accuracy(scores, targets):
 @torch.no_grad()
 def valid_step(model, dl_valid, loss_func, perf_func, device):
 
-    # Coloca o modelo em modo de validação. 
+    # Coloca o modelo em modo de validação.
     model.eval()
     # Variáveis que armazenarão a loss e a acurácia
     loss_log = 0.
@@ -92,9 +92,9 @@ def valid_step(model, dl_valid, loss_func, perf_func, device):
 
     return loss_log.item(), perf_log.item()
 
-def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
+def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
           num_workers=5):
-    
+
     # Fixa todas as seeds
     seed_all(seed)
     # Usa cuda se disponível
@@ -107,7 +107,7 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
 
     # persistent_workers evita que cada processo reimporte as bibliotecas
     # Python no Windows
-    dl_train = DataLoader(ds_train, batch_size=bs, shuffle=True, 
+    dl_train = DataLoader(ds_train, batch_size=bs, shuffle=True,
                           num_workers=num_workers, persistent_workers=num_workers>0)
     dl_valid = DataLoader(ds_valid, batch_size=bs, shuffle=False,
                           num_workers=num_workers, persistent_workers=num_workers>0)
@@ -135,12 +135,12 @@ def train(model, bs, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
         }
 
         # Salva o estado atual
-        torch.save(checkpoint, '../data/checkpoints/M06/checkpoint.pt') 
+        torch.save(checkpoint, '../data/checkpoints/M06/checkpoint.pt')
 
         # Melhor modelo encontrado
         if loss_valid<best_loss:
             torch.save(checkpoint, '../data/checkpoints/M06/best_model.pt')
-            best_loss = loss_valid             
+            best_loss = loss_valid
 
     model.to('cpu')
 

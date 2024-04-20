@@ -54,7 +54,7 @@ def valid_step(model, dl_valid, loss_func, perf_func):
 
     return loss_log.item(), perf_log.item()
 
-def plot_log(logger):
+def show_log(logger):
 
     epochs, losses_train, losses_valid, accs = zip(*logger)
 
@@ -84,7 +84,7 @@ def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy,
         loss_train = train_step(model, dl_train, optim, loss_func)
         loss_valid, perf = valid_step(model, dl_valid, loss_func, perf_func)
         logger.append((epoch, loss_train, loss_valid, perf))
-        plot_log(logger)
+        show_log(logger)
 
     return logger
 

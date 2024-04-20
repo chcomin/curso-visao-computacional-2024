@@ -65,7 +65,7 @@ class OxfordIIITPet(Dataset):
             image = self.transforms(image)
 
         return image, target
-    
+
     def __len__(self):
         return len(self.images)
 
@@ -75,8 +75,8 @@ class TransformsTrain:
     def __init__(self, resize_size=224):
 
         transforms = transf.Compose([
-            transf.PILToTensor(),   
-            transf.RandomResizedCrop(size=(resize_size,resize_size), scale=(0.5,1.), 
+            transf.PILToTensor(),
+            transf.RandomResizedCrop(size=(resize_size,resize_size), scale=(0.5,1.),
                                      ratio=(0.7,1.3), antialias=True),
             transf.RandomHorizontalFlip(),
             transf.ToDtype(torch.float32),
@@ -94,7 +94,7 @@ class TransformsEval:
     def __init__(self):
 
         transforms = transf.Compose([
-            transf.PILToTensor(),   
+            transf.PILToTensor(),
             transf.Resize(size=256, antialias=True),
             transf.CenterCrop(size=224),
             transf.ToDtype(torch.float32),
@@ -137,7 +137,7 @@ def get_dataset(root, split=0.2, resize_size=224):
     indices = list(range(n))
     random.seed(42)
     random.shuffle(indices)
-    
+
     ds_train = Subset(ds, indices[n_valid:], TransformsTrain(resize_size))
     ds_valid = Subset(ds, indices[:n_valid], TransformsEval())
 
