@@ -1,5 +1,4 @@
 import random
-from functools import partial
 import numpy as np
 import torch
 from torch.utils.data import Dataset
@@ -7,6 +6,7 @@ from torchvision import datasets
 import torchvision.transforms.v2 as transforms_pt
 
 class Subset(Dataset):
+    """Cria um subconjunto de um dataset."""
 
     def __init__(self, ds, indices, transform=None):
         self.ds = ds
@@ -24,72 +24,55 @@ class Subset(Dataset):
     def __len__(self):
         return len(self.indices)
 
-def transform_mnist(img, mean=33., std=76.5):
-    # Conversão PIL->numpy
-    img = np.array(img, dtype=np.float32)
-    # Conversão numpy->pytorch
-    img = torch.from_numpy(img)
-    # Normalização
-    img = (img-mean)/std
-    # Adição de um canal
-    img = img.reshape(1, img.shape[0], img.shape[1])
+class Transform:
+    """Define transformações a serem aplicadas em um conjunto de imagens."""
 
-    return img
+    def __init__(self, mean, std, augment=False):
 
-def augment_mnist(img, mean=33., std=76.5):
-    '''Aplica data augmentation em imagens do MNIST.'''
+        self.mean = mean
+        self.std = std
+        self.augment = augment
 
-    color = transforms_pt.ColorJitter(brightness=0.9)
-    crop = transforms_pt.RandomResizedCrop(size=28, scale=(0.9, 1.1), ratio= (0.8, 1.2))
-    #flip = transforms_pt.RandomHorizontalFlip(p=0.5)
-    img = color(img)
-    img = transform_mnist(img, mean=mean, std=std)
+        if augment:
+            # Altera aleatoriamente o brilho das imagens
+            self.color = transforms_pt.ColorJitter(brightness=0.9)
+            # Recorta aleatoriamente uma parte da imagem e redimensiona o resultado
+            # para o tamanho 28x28
+            self.crop = transforms_pt.RandomResizedCrop(size=28, scale=(0.9, 1.1), ratio= (0.8, 1.2))
+        else:
+            self.color = None
+            self.crop = None
 
-    return crop(img)
+    def normalize(self, img):
+        # Conversão PIL->numpy
+        img = np.array(img, dtype=np.float32)
+        # Conversão numpy->pytorch
+        img = torch.from_numpy(img)
+        # Normalização
+        img = (img-self.mean)/self.std
+        # Adição de um canal
+        img = img.reshape(1, img.shape[0], img.shape[1])
 
-def load_mnist(root='../data', n=1000):
+        return img
 
-    ds = datasets.MNIST(root, train=True, download=True)
-    random.seed(42)
-    indices = random.sample(range(len(ds)), k=2*n)
-    ds_train = Subset(ds, indices[:n], transform_mnist)
-    ds_valid = Subset(ds, indices[n:], transform_mnist)
+    def __call__(self, img):
 
-    return ds_train, ds_valid
+        if self.augment:
+            img = self.color(img)
+        img = self.normalize(img)
+        if self.augment:
+            img = self.crop(img)
 
-def load_mnist_small(root='../data', n_train=50, n_valid=1000):
-    '''Seleciona `n_train`/10 imagens de cada classe do MNIST e cria um
-    dataset.'''
+        return img
 
-    ds = datasets.MNIST(root, train=True, download=True)
-    train_indices, valid_indices = small_split(ds, n_train=n_train, n_valid=n_valid)
-
-    ds_train = Subset(ds, train_indices, transform_mnist)
-    ds_valid = Subset(ds, valid_indices, transform_mnist)
-
-    return ds_train, ds_valid
-
-def load_fashion_mnist(root='../data', n=1000):
-    '''Carrega o dataset Fashion MNIST.'''
-
-    ds = datasets.FashionMNIST(root, train=True, download=True)
-    random.seed(42)
-    indices = random.sample(range(len(ds)), k=2*n)
-
-    transform = partial(transform_mnist, mean=73., std=81.7)
-    ds_train = Subset(ds, indices[:n], transform)
-    ds_valid = Subset(ds, indices[n:], transform)
-
-    return ds_train, ds_valid
-
-def load_fashion_mnist_small(root='../data', n_train=50, n_valid=1000):
+def load_fashion_mnist_small(root='../data', n_train=50, n_valid=1000, augment=False):
     '''Seleciona `n_train`/10 imagens de cada classe do Fashion MNIST e cria um
     dataset.'''
 
     ds = datasets.FashionMNIST(root, train=True, download=True)
     train_indices, valid_indices = small_split(ds, n_train=n_train, n_valid=n_valid)
 
-    transform = partial(transform_mnist, mean=73., std=81.7)
+    transform = Transform(mean=73., std=81.7, augment=augment)
     ds_train = Subset(ds, train_indices, transform)
     ds_valid = Subset(ds, valid_indices, transform)
 

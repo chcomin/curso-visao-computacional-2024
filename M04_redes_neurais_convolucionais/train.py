@@ -73,13 +73,14 @@ def show_log(logger):
     display.clear_output(wait=True)
     plt.show()
 
-def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy):
+def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy,
+          weight_decay=0.):
 
     dl_train = DataLoader(ds_train, batch_size=bs, shuffle=True)
     dl_valid = DataLoader(ds_valid, batch_size=bs, shuffle=False)
 
     loss_func = nn.CrossEntropyLoss()
-    optim = torch.optim.SGD(model.parameters(), lr=lr)
+    optim = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay)
     logger = []
     for epoch in range(0, num_epochs):
         loss_train = train_step(model, dl_train, optim, loss_func)

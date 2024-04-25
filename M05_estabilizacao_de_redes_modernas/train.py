@@ -1,3 +1,6 @@
+"""Este script é exatamente igual ao script presente  em 
+M04_redes_neurais_convolucionais/train.py"""
+
 import matplotlib.pyplot as plt
 from IPython import display
 import torch
@@ -18,7 +21,7 @@ def train_step(model, dl_train, optim, loss_func):
         loss = loss_func(scores, targets)
         loss.backward()
         optim.step()
-        
+
         # Multiplica por imgs.shape[0] porque o último batch pode ter tamanho diferente
         loss_log += loss.detach()*imgs.shape[0]
 
@@ -33,8 +36,9 @@ def accuracy(scores, targets):
 # Anotador para evitar que gradientes sejam registrados dentro da função
 @torch.no_grad()
 def valid_step(model, dl_valid, loss_func, perf_func):
+    '''Valida o modelo no conjunto de validação.'''
 
-    # Coloca o modelo em modo de validação. 
+    # Coloca o modelo em modo de validação.
     model.eval()
     # Variáveis que armazenarão a loss e a acurácia
     loss_log = 0.
@@ -55,6 +59,7 @@ def valid_step(model, dl_valid, loss_func, perf_func):
     return loss_log.item(), perf_log.item()
 
 def show_log(logger):
+    '''Mostra as métricas de treinamento e validação.'''
 
     epochs, losses_train, losses_valid, accs = zip(*logger)
 
@@ -68,10 +73,10 @@ def show_log(logger):
     ax2.set_ylabel('Accuracy')
     fig.tight_layout()
 
-    display.clear_output(wait=True) 
+    display.clear_output(wait=True)
     plt.show()
 
-def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy, 
+def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy,
           weight_decay=0.):
 
     dl_train = DataLoader(ds_train, batch_size=bs, shuffle=True)
@@ -87,4 +92,3 @@ def train(model, ds_train, ds_valid, bs, num_epochs, lr, perf_func=accuracy,
         show_log(logger)
 
     return logger
-

@@ -5,6 +5,7 @@ from torch.utils.data import Dataset
 from torchvision import datasets
 
 class Subset(Dataset):
+    """Cria um subconjunto de um dataset."""
 
     def __init__(self, ds, indices, transform=None):
         self.ds = ds
