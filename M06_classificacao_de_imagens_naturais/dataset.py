@@ -95,6 +95,9 @@ class TransformsEval:
 
         transforms = transf.Compose([
             transf.PILToTensor(),
+            # Por questões históricas (artigo AlexNet), é comum redimensionar
+            # a imagem para o tamanho 256x256 e depois aplicar um crop de tamanho
+            # 224x224
             transf.Resize(size=256, antialias=True),
             transf.CenterCrop(size=224),
             transf.ToDtype(torch.float32),
