@@ -26,8 +26,16 @@ class Subset(Dataset):
         return len(self.indices)
 
 class OxfordIIITPetSeg(Dataset):
+    """Dataset de segmentação Oxford Pets."""
 
     def __init__(self, root, transforms=None, ignore_val=2):
+        """
+        Args:
+            root: Diretório raiz.
+            transforms: Transformações a serem aplicadas nas imagens originais e 
+            de rótulos.
+            ignore_val: Valor associado a píxeis que serão ignorados (borda).
+        """
 
         root = Path(root)
         images_folder = root / "images"
@@ -42,7 +50,6 @@ class OxfordIIITPetSeg(Dataset):
                 images.append(images_folder/f'{name}.jpg')
                 segs.append(segs_folder/f'{name}.png')
 
-        self.classes = ['Cat', 'Dog']
         self.images = images
         self.segs = segs
         self.transforms = transforms

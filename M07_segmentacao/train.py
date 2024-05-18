@@ -23,10 +23,10 @@ import M06_classificacao_de_imagens_naturais.train as train_class
 def iou(scores, targets):
     '''Função que calcula a Intersecção sobre a União entre o resultado
     da rede e o rótulo conhecido.'''
-    
+
     pred = scores.argmax(dim=1).reshape(-1)
     targets = targets.reshape(-1)
-    
+
     pred = pred[targets!=2]
     targets = targets[targets!=2]
 
@@ -37,9 +37,9 @@ def iou(scores, targets):
 
     return iou
 
-def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_size=224, seed=0, 
+def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
           num_workers=5):
-    
+
     train_class.seed_all(seed)
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -62,7 +62,7 @@ def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_siz
     # acima
     loss_func = nn.CrossEntropyLoss(torch.tensor(class_weights, device=device), ignore_index=2)
     optim = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=weight_decay,
-                            momentum=0.9) 
+                            momentum=0.9)
     sched = torch.optim.lr_scheduler.PolynomialLR(optim, num_epochs)
     logger = []
     best_loss = torch.inf
@@ -84,12 +84,12 @@ def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_siz
         }
 
         # Salva o estado atual
-        torch.save(checkpoint, '../data/checkpoints/M07/checkpoint.pt') 
+        torch.save(checkpoint, '../data/checkpoints/M07/checkpoint.pt')
 
         # Melhor modelo encontrado
         if loss_valid<best_loss:
             torch.save(checkpoint, '../data/checkpoints/M07/best_model.pt')
-            best_loss = loss_valid       
+            best_loss = loss_valid
 
     model.to('cpu')
 
