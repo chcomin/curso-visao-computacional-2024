@@ -24,17 +24,37 @@ def iou(scores, targets):
     '''Função que calcula a Intersecção sobre a União entre o resultado
     da rede e o rótulo conhecido.'''
 
+    # Transforma a predição da rede em índices 0 e 1, e aplica em reshape
+    # nos tensores para transformá-los em 1D
     pred = scores.argmax(dim=1).reshape(-1)
     targets = targets.reshape(-1)
 
+    # Mantém apenas valores para os quais target!=2. O valor 2 indica píxeis
+    # a serem ignorados
     pred = pred[targets!=2]
     targets = targets[targets!=2]
 
-    tp = (pred==targets).sum()
-    fp = ((pred==1) & (targets==0)).sum()
-    fn = ((pred==0) & (targets==1)).sum()
-    iou = tp/(tp+fp+fn)
+    # Verdadeiro positivos
+    tp = ((targets==1) & (pred==1)).sum()
+    # Verdadeiro negativos
+    tn = ((targets==0) & (pred==0)).sum()
+    # Falso positivos
+    fp = ((targets==0) & (pred==1)).sum()
+    # Falso negativos
+    fn = ((targets==1) & (pred==0)).sum()
 
+    # Algumas métricas interessantes para medir a qualidade do resultado
+    # Fração de píxeis corretos
+    acc = (tp+tn)/(tp+tn+fp+fn)
+    # Intersecção sobre a união (IoU)
+    iou = tp/(tp+fp+fn)
+    # Precisão
+    prec = tp/(tp+fp)
+    # Revocação
+    rev = tp/(tp+fn)
+
+    # Retorna apenas o iou para não termos que reescrever a função de plotagem
+    # dos resultados, que espera um único valor de performance
     return iou
 
 def train(model, bs_train, bs_valid, num_epochs, lr, weight_decay=0., resize_size=224, seed=0,
