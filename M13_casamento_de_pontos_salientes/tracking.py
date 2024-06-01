@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-def get_matched_image(img_scene, img_obj, kp_obj, des_object, sift):
+def find_object(img_scene, img_obj, kp_obj, des_object, sift):
     """Identifica a posição de um objeto em uma outra imagem.
 
     Args:
@@ -47,7 +47,7 @@ def get_matched_image(img_scene, img_obj, kp_obj, des_object, sift):
     return obj_bounds_in_scene
 
 def draw_bbox(img_scene, obj_bounds):
-    """Desenha bounding box do objeto em uma imagem"""
+    """Desenha a bounding box do objeto em uma imagem"""
 
     img_scene_obj = cv2.polylines(
         img_scene.copy(), [np.int32(obj_bounds)], True, 255, 3, cv2.LINE_AA)
