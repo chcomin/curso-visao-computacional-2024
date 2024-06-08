@@ -1,5 +1,5 @@
-"""script de treinamento de um autoencoder. As diferenças para o scritp de treinamento 
-de classificação são:
+"""script de treinamento de um modelo codificador-decodificador para reconstrução 
+de imagens. As diferenças para o scritp de treinamento de classificação são:
 
 1. A função de acurácia é modificada, pois não temos um problema de classificação. 
 É um problema em aberto definir a similaridade entre imagens.
